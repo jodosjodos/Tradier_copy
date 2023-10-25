@@ -9,8 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@heroicons/react": "2.0.12",
     "@material-tailwind/react": "2.1.2",
+    "@mui/material": "^5.14.15",
     "apexcharts": "3.35.5",
     "metaapi.cloud-sdk": "^25.0.0",
     "prop-types": "15.8.1",
