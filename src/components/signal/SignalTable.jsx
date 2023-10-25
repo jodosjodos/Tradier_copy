@@ -48,6 +48,11 @@ export function SignalTable() {
     setPageNumber(pageNumber - 1);
   };
 
+
+  const handleDelete=(signal)=>{
+   const signalD= signalData.filter(singleSignaldata=>singleSignaldata.signal != signal)
+  console.log(" reaching out" + signalD);
+  }
   const displayData = signalData
     .slice(pagesVisited, pagesVisited + accountsPerPage)
     .map(
@@ -111,11 +116,11 @@ export function SignalTable() {
             </td>
             <td className={className}>
               <div className="flex gap-1">
-                <IconButton color="red" className="h-8 w-8">
+                <IconButton color="red" className="h-8 w-8" >
                   <Cog8ToothIcon className="h-4 w-4" />
                 </IconButton>
                 <IconButton color="amber" className="h-8 w-8">
-                  <TrashIcon strokeWidth={2} className="h-4 w-4" />
+                  <TrashIcon strokeWidth={2} className="h-4 w-4" onClick={()=>handleDelete(signal)} />
                 </IconButton>
               </div>
             </td>
@@ -128,7 +133,7 @@ export function SignalTable() {
       <Card>
         <CardHeader variant="gradient" color="blue" className="mb-8 p-6">
           <Typography variant="h6" color="white">
-            Accounts
+            Signals
           </Typography>
         </CardHeader>
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">

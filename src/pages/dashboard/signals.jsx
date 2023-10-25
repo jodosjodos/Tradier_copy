@@ -25,7 +25,7 @@ export function Signals() {
           variant="gradient"
         >
           <CreditCardIcon color="white" className="h-5 w-5 text-inherit" />
-          <div>Managde Renewals</div>
+          <div>Manage Renewals</div>
         </Button>
       </div>
       <SignalTable />
