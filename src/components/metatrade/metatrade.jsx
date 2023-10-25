@@ -9,6 +9,7 @@ const token =
 const Trade = () => {
   const [data, setData] = useState(null);
 
+
   const connectToMetaApi = async () => {
     // Get instance of MetaApi with your MetaApi token
     const metaApi = new MetaApi(token);
@@ -34,6 +35,7 @@ const Trade = () => {
     console.log(accountInformation);
     setData(accountInformation);
   };
+  
 
   useEffect(() => {
     fetchData();
