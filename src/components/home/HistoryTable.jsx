@@ -16,7 +16,7 @@ import {
 import { historyTableData } from "@/data";
 import { useState } from "react";
 
-export function HistoryTable() {
+export function HistoryTable({group,account}) {
   const [pageNumber, setPageNumber] = useState(1);
   const historyPerPage = 5;
   const pagesVisited = (pageNumber - 1) * historyPerPage;
