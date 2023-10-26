@@ -2,7 +2,6 @@ import { Button, Checkbox, FormControlLabel, Menu, Fade } from "@mui/material";
 import React, { useState } from "react";
 
 const ColumnsSelector = ({
-  selectedColumns,
   handleChange,
   arrayOfColumns,
   handleReset,
