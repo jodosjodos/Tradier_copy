@@ -17,9 +17,10 @@ import {
 import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/24/solid";
 import signalData from "@/data/signal-table-data";
 import { useState } from "react";
-
+import { Link, useNavigate } from "react-router-dom";
 export function SignalTable() {
   const [pageNumber, setPageNumber] = useState(1);
+  const [signalDatas, setSignalDatas] = useState(signalData);
   const accountsPerPage = 5;
   const pagesVisited = (pageNumber - 1) * accountsPerPage;
 
@@ -48,7 +49,13 @@ export function SignalTable() {
     setPageNumber(pageNumber - 1);
   };
 
-  const displayData = signalData
+  const handleDelete = (signal) => {
+    setSignalDatas((prev) => prev.filter((item) => item.signal !== signal));
+  };
+
+
+
+  const displayData = signalDatas
     .slice(pagesVisited, pagesVisited + accountsPerPage)
     .map(
       (
@@ -111,11 +118,17 @@ export function SignalTable() {
             </td>
             <td className={className}>
               <div className="flex gap-1">
-                <IconButton color="red" className="h-8 w-8">
-                  <Cog8ToothIcon className="h-4 w-4" />
-                </IconButton>
+                <Link to={`${signal}`}>
+                  <IconButton color="red" className="h-8 w-8">
+                    <Cog8ToothIcon className="h-4 w-4" />
+                  </IconButton>
+                </Link>
                 <IconButton color="amber" className="h-8 w-8">
-                  <TrashIcon strokeWidth={2} className="h-4 w-4" />
+                  <TrashIcon
+                    strokeWidth={2}
+                    className="h-4 w-4"
+                    onClick={() => handleDelete(signal)}
+                  />
                 </IconButton>
               </div>
             </td>
@@ -128,10 +141,10 @@ export function SignalTable() {
       <Card>
         <CardHeader variant="gradient" color="blue" className="mb-8 p-6">
           <Typography variant="h6" color="white">
-            Accounts
+            Signals
           </Typography>
         </CardHeader>
-        <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
+        <CardBody className="  px-0 pt-0 pb-2">
           <table className="w-full min-w-[640px] table-auto">
             <thead>
               <tr>

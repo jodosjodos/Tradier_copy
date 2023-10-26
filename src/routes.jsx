@@ -24,6 +24,7 @@ import {
   Copier,
 } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
+import UserSignalDetails from "./components/signal/UserSignalDetails";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -106,6 +107,7 @@ export const routes = [
         path: "/signalProvider",
         element: <Tables />,
       },
+    
     ],
   },
   {
