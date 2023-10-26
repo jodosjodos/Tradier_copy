@@ -53,8 +53,6 @@ export function SignalTable() {
     setSignalDatas((prev) => prev.filter((item) => item.signal !== signal));
   };
 
-
-
   const displayData = signalDatas
     .slice(pagesVisited, pagesVisited + accountsPerPage)
     .map(

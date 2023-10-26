@@ -10,15 +10,34 @@ import {
   Select,
   Option,
 } from "@material-tailwind/react";
-import {
-  UserPlusIcon,
-  BuildingLibraryIcon,
-  PlusCircleIcon,
-} from "@heroicons/react/24/outline";
+import { copierTableData, tradesTableData } from "@/data";
+import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import TradeCopierTable from "@/components/config/TradeCopier";
 export function Copier() {
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(!open);
+
+  const [provider, setProvider] = useState("");
+  const [sendTo, setSendTo] = useState("");
+  const [multiplier, setMultiplier] = useState("");
+  const [multiplierValue, setMultiplierValue] = useState("");
+  const send_to_number = 456;
+
+  const handleOpen = () => {
+    
+    setOpen(!open);
+  };
+  const submitData=()=>{
+    const myObj = {
+      send_to_name: provider,
+      sent_to_number: multiplierValue,
+      risk_type: multiplier,
+    };
+
+    copierTableData.push(myObj);
+    setOpen(!open)
+
+  }
+  console.log(copierTableData);
 
   return (
     <div className="mt-12 mb-8 flex flex-col gap-12">
@@ -48,40 +67,71 @@ export function Copier() {
           <div className="grid grid-cols-4 gap-4 p-3">
             <div className="m-auto font-bold">Copy From</div>
             <div className="col-span-3 flex w-72 flex-col ">
-              <Select color="blue" label="Provider">
-                <Option>Demo Account</Option>
-                <Option>Signals</Option>
-                <Option>Trading Network Club</Option>
-                <Option>My accounts</Option>
+              <Select
+                color="blue"
+                value={provider}
+                label="Provider"
+                onChange={(e) => setProvider(e)}
+              >
+                <Option value="demo account">Demo Account</Option>
+                <Option value="demo account">Signals</Option>
+                <Option value="Trading Network Club">
+                  Trading Network Club
+                </Option>
+                <Option value="My accounts">My accounts</Option>
               </Select>
             </div>
           </div>
           <div className="grid grid-cols-4 gap-4 p-3">
             <div className="m-auto font-bold">Send To</div>
             <div className="col-span-3 flex w-72 flex-col ">
-              <Select color="blue" label="Copier">
-                <Option>Demo Account</Option>
-                <Option>Signals</Option>
-                <Option>Trading Network Club</Option>
-                <Option>My accounts</Option>
+              <Select
+                color="blue"
+                value={sendTo}
+                label="Copier"
+                onChange={(e) => setSendTo(e)}
+              >
+                <Option value="Demo Account">Demo Account</Option>
+                <Option value="Signals">Signals</Option>
+                <Option value="Trading Network Club">
+                  Trading Network Club
+                </Option>
+                <Option value="My accounts">My accounts</Option>
               </Select>
             </div>
           </div>
           <div className="grid grid-cols-4 gap-4 p-3">
             <div className="m-auto font-bold">Risk Type</div>
             <div className="col-span-3 flex w-72 flex-col ">
-              <Select color="blue" label="Copier">
-                <Option>Risk multiplier by balance</Option>
-                <Option>Risk multiplier by equity</Option>
-                <Option>Lot Multiplierffffffffffff</Option>
-                <Option>Fixed lot</Option>
+              <Select
+                color="blue"
+                label="Copier"
+                value={multiplier}
+                onChange={(e) => setMultiplier(e)}
+              >
+                <Option value="Risk multiplier by balance">
+                  Risk multiplier by balance
+                </Option>
+                <Option value="Risk multiplier by equity">
+                  Risk multiplier by equity
+                </Option>
+                <Option value="Lot Multiplierffffffffffff">
+                  Lot Multiplierffffffffffff
+                </Option>
+                <Option value="Fixed lot">Fixed lot</Option>
               </Select>
             </div>
           </div>
           <div className="grid grid-cols-4 gap-4 p-3">
             <div className="m-auto font-bold">Multiplier</div>
             <div className="col-span-3 flex w-72 flex-col ">
-              <Input label="Multiplier" color="blue" type="number" />
+              <Input
+                label="Multiplier"
+                color="blue"
+                type="number"
+                value={multiplierValue}
+                onChange={(e) => setMultiplierValue(e.target.value)}
+              />
             </div>
           </div>
         </DialogBody>
@@ -89,7 +139,7 @@ export function Copier() {
           <Button
             variant="text"
             color="red"
-            onClick={handleOpen}
+            onClick={submitData}
             className="mr-1"
           >
             <span>Cancel</span>
