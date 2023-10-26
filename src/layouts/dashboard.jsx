@@ -10,6 +10,8 @@ import {
 import routes from "@/routes";
 import { useMaterialTailwindController, setOpenConfigurator } from "@/context";
 
+import Profile from "../components/accounts/profile"
+
 
 export function Dashboard() {
   const [controller, dispatch] = useMaterialTailwindController();
@@ -41,6 +43,8 @@ export function Dashboard() {
                 <Route exact path={path} element={element} />
               ))
           )}
+          <Route path="/accounts/:id/edit/*" element={<Profile/>}>
+          </Route>
         </Routes>
         <div className="text-blue-gray-600">
           <Footer />

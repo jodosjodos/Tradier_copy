@@ -103,7 +103,7 @@ export const routes = [
       {
         icon: <ArrowsRightLeftIcon {...icon} />,
         name: "signal provider",
-        path: "/signal provider",
+        path: "/signalProvider",
         element: <Tables />,
       },
     ],
