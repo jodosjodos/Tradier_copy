@@ -16,7 +16,7 @@ import {
 import { tradesTableData } from "@/data";
 import { useState } from "react";
 
-export function TradesTable() {
+export function TradesTable({group,account}) {
   const [pageNumber, setPageNumber] = useState(1);
   const tradesPerPage = 5;
   const pagesVisited = (pageNumber - 1) * tradesPerPage;
