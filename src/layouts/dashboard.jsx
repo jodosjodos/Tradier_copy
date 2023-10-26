@@ -44,9 +44,10 @@ export function Dashboard() {
               pages.map(({ path, element }) => (
                 <Route exact path={path} element={element} />
               ))
-          )};
+
+          )}
+          <Route path="/signals/:signal" element={<UserSignalDetails/>} />
           <Route path="/accounts/:id/edit/*" element={<Profile/>}/>
-          <Route path="/signals/:signal" element={<UserSignalDetails/>}/>
           <Route path="/payment" element={<Renew/>}/>
         </Routes>
         <div className="text-blue-gray-600">

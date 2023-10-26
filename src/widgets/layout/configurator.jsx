@@ -56,7 +56,7 @@ export function Configurator() {
   };
 
   React.useEffect(() => {
-    const stars = fetch(
+    const stars =  fetch(
       "https://api.github.com/repos/creativetimofficial/material-tailwind-dashboard-react"
     )
       .then((response) => response.json())

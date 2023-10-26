@@ -86,19 +86,19 @@ export const routes = [
       {
         icon: <ShareIcon {...icon} />,
         name: "trade copier",
-        path: "/trade copier",
+        path: "/trade",
         element: <Copier />,
       },
       {
         icon: <EnvelopeIcon {...icon} />,
         name: "email alerts",
-        path: "/email alerts",
+        path: "/email",
         element: <Tables />,
       },
       {
         icon: <ArrowRightIcon {...icon} />,
         name: "signal followers",
-        path: "/signal followers",
+        path: "/signalFollowers",
         element: <Tables />,
       },
       {
