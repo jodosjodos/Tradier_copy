@@ -9,6 +9,8 @@ import {
 } from "@/widgets/layout";
 import routes from "@/routes";
 import { useMaterialTailwindController, setOpenConfigurator } from "@/context";
+import UserSignalDetails from "@/components/signal/UserSignalDetails";
+import Renew from "@/components/signal/Renew";
 
 
 export function Dashboard() {
@@ -41,6 +43,10 @@ export function Dashboard() {
                 <Route exact path={path} element={element} />
               ))
           )}
+          <Route path="/signals/:signal" element={<UserSignalDetails/>}/>
+          <Route path="/payment" element={<Renew/>}/>
+
+          
         </Routes>
         <div className="text-blue-gray-600">
           <Footer />

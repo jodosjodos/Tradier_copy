@@ -13,7 +13,7 @@ export const signalData = [
     email_alerts: true,
     trade_copier: true,
     access_terms: "Non billable access",
-    expires: false,
+    expires: true,
   },
   {
     signal: "TradersNetworkClub (254740)",
