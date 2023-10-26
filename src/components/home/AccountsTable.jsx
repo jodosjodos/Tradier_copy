@@ -17,8 +17,9 @@ import {
 import { accountsTableData, projectsTableData } from "@/data";
 import ReactPaginate from "react-paginate";
 import { useState } from "react";
+import TableHeader from "../TableHeader";
 
-export function AccountsTable() {
+export function AccountsTable({group,account,columns}) {
   const [pageNumber, setPageNumber] = useState(1);
   const accountsPerPage = 5;
   const pagesVisited = (pageNumber - 1) * accountsPerPage;
@@ -28,6 +29,7 @@ export function AccountsTable() {
   // const changePage = ({ selected }) => {
   //   setPageNumber(selected);
   // };
+
 
   const getItemProps = (index) => ({
     variant: pageNumber === index ? "filled" : "text",
@@ -48,7 +50,10 @@ export function AccountsTable() {
     setPageNumber(pageNumber - 1);
   };
 
-  const displayData = accountsTableData
+  const getColumnName = ()=>{
+    
+  }
+  const displayData = accountsTableData.filter(accountData=>(group !== ""? accountData.account === group : accountData && account !== ""? accountData.account === account:accountData))
     .slice(pagesVisited, pagesVisited + accountsPerPage)
     .map(
       (
@@ -80,27 +85,27 @@ export function AccountsTable() {
                 <WifiIcon strokeWidth={2} className="h-4 w-4" color="green" />
               </Typography>
             </td>
-            <td className={className}>
+            {columns.account && <td className={className}>
               <Typography className="text-xs font-semibold text-blue-gray-600">
-                {account}
+                { account}
               </Typography>
-            </td>
-            <td className={className}>
+            </td>}
+            { columns.mt && <td className={className}>
               <Typography className="text-xs font-semibold text-blue-gray-600">
                 {mt}
               </Typography>
-            </td>
-            <td className={className}>
+            </td>}
+            {columns.balance && <td className={className}>
               <Typography className="text-xs font-normal text-blue-gray-500">
-                {balance}
+                { balance}
               </Typography>
-            </td>
-            <td className={className}>
+            </td>}
+            { columns.equity &&  <td className={className}>
               <Typography className="text-xs font-normal text-blue-gray-500">
                 {equity}
               </Typography>
-            </td>
-            <td className={className}>
+            </td>}
+            {columns.equity_percent && <td className={className}>
               <Typography
                 className="text-xs font-normal"
                 color={
@@ -113,39 +118,39 @@ export function AccountsTable() {
                     : "green"
                 }
               >
-                {equity_percent}
+                { equity_percent}
               </Typography>
-            </td>
-            <td className={className}>
+            </td>}
+            { columns.open_traders && <td className={className}>
               <Typography className="text-xs font-normal text-blue-gray-500">
-                {open_traders}
+                { open_traders}
               </Typography>
-            </td>
-            <td className={className}>
+            </td>}
+            {columns.pending && <td className={className}>
               <Typography className="text-xs font-normal text-blue-gray-500">
-                {pending}
+                { pending}
               </Typography>
-            </td>
-            <td className={className}>
+            </td>}
+            {columns.day && <td className={className}>
               <Typography className="text-xs font-normal text-blue-gray-500">
-                {day}
+                { day}
               </Typography>
-            </td>
-            <td className={className}>
+            </td>}
+            { columns.week && <td className={className}>
               <Typography className="text-xs font-normal text-blue-gray-500">
                 {week}
               </Typography>
-            </td>
-            <td className={className}>
+            </td>}
+            { columns.month &&  <td className={className}>
               <Typography className="text-xs font-normal text-blue-gray-500">
                 {month}
               </Typography>
-            </td>
-            <td className={className}>
+            </td>}
+            {columns.total && <td className={className}>
               <Typography className="text-xs font-normal text-blue-gray-500">
                 {total}
               </Typography>
-            </td>
+            </td>}
             <td className={className}>
               <IconButton color="blue" className="h-8 w-8">
                 <ChartBarSquareIcon strokeWidth={2} className="h-4 w-4" />
@@ -167,33 +172,19 @@ export function AccountsTable() {
           <table className="w-full min-w-[640px] table-auto">
             <thead>
               <tr>
-                {[
-                  "",
-                  "Account",
-                  "MT",
-                  "Balance",
-                  "Equity",
-                  "Equity %",
-                  "Open Trades(Lots)",
-                  "Pending",
-                  "Day",
-                  "Week",
-                  "Month",
-                  "Total",
-                  " ",
-                ].map((el) => (
-                  <th
-                    key={el}
-                    className="border-b border-blue-gray-50 py-3 px-5 text-left"
-                  >
-                    <Typography
-                      variant="small"
-                      className="text-[11px] font-bold uppercase text-blue-gray-400"
-                    >
-                      {el}
-                    </Typography>
-                  </th>
-                ))}
+                <TableHeader value={" "} truthy={true}/>
+                <TableHeader value={"Account"} truthy={columns.account}/>
+                <TableHeader value={"MT"} truthy={columns.mt}/>
+                <TableHeader value={"Balance"} truthy={columns.balance}/>
+                <TableHeader value={"Equity"} truthy={columns.equity}/>
+                <TableHeader value={"Equity %"} truthy={columns.equity_percent}/>
+                <TableHeader value={"Open Trades(Lots)"} truthy={columns.open_traders}/>
+                <TableHeader value={"Pending"} truthy={columns.pending}/>
+                <TableHeader value={"Day"} truthy={columns.day}/>
+                <TableHeader value={"Week"} truthy={columns.week}/>
+                <TableHeader value={"Month"} truthy={columns.month}/>
+                <TableHeader value={"Total"} truthy={columns.total}/>
+                <TableHeader value={" "} truthy={true}/>
               </tr>
             </thead>
             <tbody>{displayData}</tbody>
@@ -232,3 +223,16 @@ export function AccountsTable() {
 }
 
 export default AccountsTable;
+
+// "",                "Account",
+//                   "MT",
+//                   "Balance",
+//                   "Equity",
+//                   "Equity %",
+//                   "Open Trades(Lots)",
+//                   "Pending",
+//                   "Day",
+//                   "Week",
+//                   "Month",
+//                   "Total",
+//                   " ",

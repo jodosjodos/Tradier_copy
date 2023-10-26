@@ -19,6 +19,7 @@ import {
 } from "@heroicons/react/24/outline";
 import manageAccountData from "@/data/manage-account-data";
 import { useState } from "react";
+import { Link } from 'react-router-dom';
 
 export function ManageAccount() {
   const [pageNumber, setPageNumber] = useState(1);
@@ -125,9 +126,11 @@ export function ManageAccount() {
                 <IconButton color="blue" className="h-8 w-8">
                   <WifiIcon strokeWidth={2} className="h-4 w-4" />
                 </IconButton>
-                <IconButton color="red" className="h-8 w-8">
-                  <Cog8ToothIcon strokeWidth={2} className="h-4 w-4" />
-                </IconButton>
+                <Link to={`../accounts/${id}/edit`}>
+                  <IconButton color="red" className="h-8 w-8">
+                    <Cog8ToothIcon strokeWidth={2} className="h-4 w-4" />
+                  </IconButton>
+                </Link>
                 <IconButton color="green" className="h-8 w-8">
                   <ListBulletIcon strokeWidth={2} className="h-4 w-4" />
                 </IconButton>
