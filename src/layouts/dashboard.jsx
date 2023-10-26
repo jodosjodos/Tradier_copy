@@ -43,7 +43,7 @@ export function Dashboard() {
                 <Route exact path={path} element={element} />
               ))
           )}
-          <Route path="/signals/:signal" element={<UserSignalDetails/>}/>
+          <Route path="/signals/:signal" element={<UserSignalDetails/>} />
           <Route path="/payment" element={<Renew/>}/>
 
           
