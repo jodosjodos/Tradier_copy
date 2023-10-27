@@ -20,24 +20,28 @@ export function Copier() {
   const [sendTo, setSendTo] = useState("");
   const [multiplier, setMultiplier] = useState("");
   const [multiplierValue, setMultiplierValue] = useState("");
-  const send_to_number = 456;
+  const [data, setData] = useState(copierTableData);
 
   const handleOpen = () => {
-    
     setOpen(!open);
   };
-  const submitData=()=>{
+  const submitData = () => {
     const myObj = {
-      send_to_name: provider,
-      sent_to_number: multiplierValue,
+      copy_from :provider,
+      send_to_name: sendTo,
+      send_to_number: parseInt(multiplierValue),
       risk_type: multiplier,
+      direction: "right  ",
+      copier_mode:"ON"
     };
 
-    copierTableData.push(myObj);
-    setOpen(!open)
-
-  }
-  console.log(copierTableData);
+    setData([...data, myObj]);
+    setProvider("");
+    setSendTo("");
+    setMultiplierValue("");
+    setMultiplier("");
+    setOpen(!open);
+  };
 
   return (
     <div className="mt-12 mb-8 flex flex-col gap-12">
@@ -53,7 +57,7 @@ export function Copier() {
           <div>Create</div>
         </Button>
       </div>
-      <TradeCopierTable />
+      <TradeCopierTable data={data} setData={setData} />
       <Dialog
         open={open}
         handler={handleOpen}
@@ -105,7 +109,7 @@ export function Copier() {
             <div className="col-span-3 flex w-72 flex-col ">
               <Select
                 color="blue"
-                label="Copier"
+                label="Risk type"
                 value={multiplier}
                 onChange={(e) => setMultiplier(e)}
               >
@@ -139,12 +143,12 @@ export function Copier() {
           <Button
             variant="text"
             color="red"
-            onClick={submitData}
             className="mr-1"
+            onClick={handleOpen}
           >
             <span>Cancel</span>
           </Button>
-          <Button variant="gradient" color="green" onClick={handleOpen}>
+          <Button variant="gradient" color="green" onClick={submitData}>
             <span>Confirm</span>
           </Button>
         </DialogFooter>

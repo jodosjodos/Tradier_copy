@@ -21,25 +21,28 @@ import {
   ArrowLeftCircleIcon,
   ArrowRightCircleIcon,
 } from "@heroicons/react/24/outline";
-import { copierTableData } from "@/data";
-import { useState } from "react";
-import { XMarkIcon } from "@heroicons/react/24/solid";
+import { useEffect, useState } from "react";
+import {
+  XMarkIcon,
+  Cog6ToothIcon,
+  PowerIcon,
+  PlusIcon,
+} from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
 
-export function TradeCopierTable() {
+export function TradeCopierTable({ data, setData }) {
   const [pageNumber, setPageNumber] = useState(1);
-  const [tradeDatas, setTradeDatas] = useState(copierTableData);
   const [isModalOpen, setIsModeOpen] = useState(false);
-  const [selectedOption,setSelectedOption]= useState("ON");
+  const [selectedOption, setSelectedOption] = useState("ON");
   const accountsPerPage = 5;
   const pagesVisited = (pageNumber - 1) * accountsPerPage;
 
-  const pageCount = Math.ceil(copierTableData.length / accountsPerPage);
+  const pageCount = Math.ceil(data.length / accountsPerPage);
 
   // const changePage = ({ selected }) => {
   //   setPageNumber(selected);
   // };
-
+  console.log(data);
   const getItemProps = (index) => ({
     variant: pageNumber === index ? "filled" : "text",
     color: "gray",
@@ -60,7 +63,7 @@ export function TradeCopierTable() {
   };
 
   const handleDelete = (send_to_name) => {
-    setTradeDatas((prev) =>
+    setData((prev) =>
       prev.filter((item) => item.send_to_name !== send_to_name)
     );
   };
@@ -68,80 +71,140 @@ export function TradeCopierTable() {
     setIsModeOpen(true);
   };
 
- 
-  const handleChange = (e)=>{
+  const handleChange = (e) => {
     setSelectedOption(e.target.value);
-  }
-  const displayData = tradeDatas
+  };
+  const displayData = data
     .slice(pagesVisited, pagesVisited + accountsPerPage)
-    .map(({ send_to_name, send_to_number, risk_type, direction }, key) => {
-      const className = `py-3 px-5 ${
-        key === tradeDatas.length - 1 ? "" : "border-b border-blue-gray-50"
-      }`;
-      return (
-        <tr key={key}>
-          <td className={className}>
-            <Typography className="text-xs font-semibold text-blue-gray-600">
-              {send_to_name}
-            </Typography>
-          </td>
-          <td className={className}>
-            <Typography className="text-xs font-semibold text-blue-gray-600">
-              {send_to_number}
+    .map(
+      (
+        { copy_from, send_to_name, send_to_number, risk_type, direction, id },
+        key
+      ) => {
+        const className = `py-3 px-5 ${
+          key === data?.lpropength - 1 ? "" : "border-b border-blue-gray-50"
+        }`;
+        return (
+          <tr key={key}>
+            <td className={className}>
+              <Typography className="text-xs font-semibold text-blue-gray-600">
+                {copy_from}
+              </Typography>
+            </td>
+            <td className={className}>
+              <Typography className="text-xs font-semibold text-blue-gray-600">
+                {send_to_name}
+              </Typography>
+            </td>
+            <td className={className}>
+              <Typography className="text-xs font-semibold text-blue-gray-600">
+                {send_to_number}
+              </Typography>
+            </td>
+            <td className={className}>
+              <Typography className="text-xs font-normal text-blue-gray-500">
+                {risk_type}
+              </Typography>
+            </td>
+            <td className={className}>
+              <Typography className="text-xs font-normal text-blue-gray-500">
+                {direction == "right" ? (
+                  <ArrowRightCircleIcon color="green" className="h-5 w-5" />
+                ) : (
+                  <ArrowLeftCircleIcon color="red" className="h-5 w-5" />
+                )}
+              </Typography>
+            </td>
+            <td className={className}>
+              <div className="flex gap-1">
+                <IconButton
+                  color="blue"
+                  className={`h-8 w-8 ${
+                    selectedOption === "ON"
+                      ? "bg-green-700"
+                      : selectedOption === "monitor"
+                      ? " bg-yellow-600"
+                      : selectedOption === "OFF"
+                      ? "bg-red-700"
+                      : ""
+                  }`}
+                  onClick={handleMode}
+                >
+                  {selectedOption == "ON" ? (
+                    <PlayIcon strokeWidth={2} className="h-4 w-4" />
+                  ) : selectedOption == "monitor" ? (
+                    <PauseIcon strokeWidth={2} className="h-4 w-4" />
+                  ) : (
+                    <StopIcon strokeWidth={2} className="h-4 w-4" />
+                  )}
+                </IconButton>
+                <Link to={`../copier/${id}/edit`}>
+                  <IconButton color="red" className="h-8 w-8">
+                    <Cog8ToothIcon strokeWidth={2} className="h-4 w-4" />
+                  </IconButton>
+                </Link>
 
-            </Typography>
-          </td>
-          <td className={className}>
-            <Typography className="text-xs font-normal text-blue-gray-500">
-              {risk_type}
-            </Typography>
-          </td>
-          <td className={className}>
-            <Typography className="text-xs font-normal text-blue-gray-500">
-              {direction == "right" ? (
-                <ArrowRightCircleIcon color="green" className="h-5 w-5" />
-              ) : (
-                <ArrowLeftCircleIcon color="red" className="h-5 w-5" />
-              )}
-            </Typography>
-          </td>
-          <td className={className}>
-            <div className="flex gap-1">
-              <IconButton color="blue" className={`h-8 w-8 ${selectedOption === "ON"? "bg-green-700":selectedOption === "monitor" ? " bg-yellow-600" :selectedOption === "OFF" ? "bg-red-700":""}`} onClick={handleMode}>
-                {selectedOption == "ON"?    <PlayIcon strokeWidth={2} className="h-4 w-4" />  : selectedOption == "monitor"?  <PauseIcon strokeWidth={2} className="h-4 w-4" /> :  <StopIcon strokeWidth={2} className="h-4 w-4" />}
-              </IconButton>
-              <IconButton color="red" className="h-8 w-8">
-                <Cog8ToothIcon strokeWidth={2} className="h-4 w-4" />
-              </IconButton>
-              <IconButton color="green" className="h-8 w-8">
-                <ListBulletIcon strokeWidth={2} className="h-4 w-4" />
-              </IconButton>
-              <IconButton
-                onClick={() => handleDelete(send_to_name)}
-                color="amber"
-                className="h-8 w-8"
-              >
-                <TrashIcon strokeWidth={2} className="h-4 w-4" />
-              </IconButton>
-            </div>
-          </td>
-        </tr>
-      );
-    });
+                <IconButton color="green" className="h-8 w-8">
+                  <ListBulletIcon strokeWidth={2} className="h-4 w-4" />
+                </IconButton>
+                <IconButton
+                  onClick={() => handleDelete(send_to_name)}
+                  color="amber"
+                  className="h-8 w-8"
+                >
+                  <TrashIcon strokeWidth={2} className="h-4 w-4" />
+                </IconButton>
+              </div>
+            </td>
+          </tr>
+        );
+      }
+    );
   return (
     <>
       <div className="mt-12 mb-8 flex flex-col gap-12">
         <Card>
-          <CardHeader variant="gradient" color="blue" className="mb-8 p-6">
+          <CardHeader
+            variant="gradient"
+            color="blue"
+            className="mb-8 flex flex-row justify-between p-6"
+          >
             <Typography variant="h6" color="white">
               Accounts
             </Typography>
+            <div className="flex flex-row gap-3">
+              <Button
+                variant="h6"
+                color="white"
+                className="flex flex-row items-center gap-2 text-black hover:text-opacity-30"
+              >
+                <Cog6ToothIcon className="w-6" />
+                <p className="textlg capitalize">Group Risk</p>
+              </Button>
+              <Button
+                variant="h6"
+                color="white"
+                className="flex flex-row items-center gap-2 text-black hover:text-opacity-30"
+              >
+                <PowerIcon className="w-6" />
+                <p className="textlg capitalize">Group Modes</p>
+              </Button>
+              <Button
+                variant="h6"
+                color="white"
+                className="flex flex-row items-center gap-2 text-black hover:text-opacity-30"
+              >
+                <PlusIcon className="w-6" />
+                <p className="textlg capitalize">Group Copier</p>
+              </Button>
+            </div>
           </CardHeader>
           <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
             <table className="w-full min-w-[640px] table-auto">
               <thead>
                 <tr>
                   {[
+                    "provider",
                     "Send To Name",
                     "Send To Number",
                     "Risk Type",
@@ -216,16 +279,30 @@ export function TradeCopierTable() {
             <div className="gpa flex h-[60%] flex-row items-center  justify-around  border-b-2">
               <p className="font-bold">Copier Mode</p>
               <div className="flex flex-col items-start">
-                <Radio color="green" name="mode" label={"ON"} value="ON" checked={selectedOption === "ON"} onChange={handleChange}/>
+                <Radio
+                  color="green"
+                  name="mode"
+                  label={"ON"}
+                  value="ON"
+                  checked={selectedOption === "ON"}
+                  onChange={handleChange}
+                />
                 <Radio
                   color="yellow"
                   name="mode"
                   label="Monitor existing trades only"
                   value={"monitor"}
-                  checked={selectedOption === "monitor"} onChange={handleChange}
-                  
+                  checked={selectedOption === "monitor"}
+                  onChange={handleChange}
                 />
-                <Radio color="red" name="mode" label="OFF " value={"OFF"} checked={selectedOption === "OFF"} onChange={handleChange} />
+                <Radio
+                  color="red"
+                  name="mode"
+                  label="OFF "
+                  value={"OFF"}
+                  checked={selectedOption === "OFF"}
+                  onChange={handleChange}
+                />
               </div>
             </div>
             <div className="flex items-end justify-end p-3 px-2">
@@ -233,8 +310,7 @@ export function TradeCopierTable() {
                 color="blue"
                 size="lg"
                 className="px-8 py-3"
-                onClick={()=>setIsModeOpen(false)}
-                
+                onClick={() => setIsModeOpen(false)}
               >
                 <Link>update</Link>
               </Button>

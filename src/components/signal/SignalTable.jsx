@@ -121,11 +121,11 @@ export function SignalTable() {
                     <Cog8ToothIcon className="h-4 w-4" />
                   </IconButton>
                 </Link>
-                <IconButton color="amber" className="h-8 w-8">
+                <IconButton color="amber" className="h-8 w-8"  onClick={() => handleDelete(signal)}>
                   <TrashIcon
                     strokeWidth={2}
                     className="h-4 w-4"
-                    onClick={() => handleDelete(signal)}
+                   
                   />
                 </IconButton>
               </div>
