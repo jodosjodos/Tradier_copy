@@ -29,16 +29,13 @@ import {
   PlusIcon,
 } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
-
 export function TradeCopierTable({ data, setData }) {
   const [pageNumber, setPageNumber] = useState(1);
   const [isModalOpen, setIsModeOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("ON");
   const accountsPerPage = 5;
   const pagesVisited = (pageNumber - 1) * accountsPerPage;
-
   const pageCount = Math.ceil(data.length / accountsPerPage);
-
   // const changePage = ({ selected }) => {
   //   setPageNumber(selected);
   // };
@@ -49,19 +46,14 @@ export function TradeCopierTable({ data, setData }) {
     onClick: () => setPageNumber(index),
     className: "rounded-full",
   });
-
   const next = () => {
     if (pageNumber === pageCount) return;
-
     setPageNumber(pageNumber + 1);
   };
-
   const prev = () => {
     if (pageNumber === 1) return;
-
     setPageNumber(pageNumber - 1);
   };
-
   const handleDelete = (send_to_name) => {
     setData((prev) =>
       prev.filter((item) => item.send_to_name !== send_to_name)
@@ -70,7 +62,6 @@ export function TradeCopierTable({ data, setData }) {
   const handleMode = () => {
     setIsModeOpen(true);
   };
-
   const handleChange = (e) => {
     setSelectedOption(e.target.value);
   };
@@ -143,7 +134,6 @@ export function TradeCopierTable({ data, setData }) {
                     <Cog8ToothIcon strokeWidth={2} className="h-4 w-4" />
                   </IconButton>
                 </Link>
-
                 <IconButton color="green" className="h-8 w-8">
                   <ListBulletIcon strokeWidth={2} className="h-4 w-4" />
                 </IconButton>
@@ -245,7 +235,6 @@ export function TradeCopierTable({ data, setData }) {
               </IconButton>
             ))}
           </div>
-
           <Button
             variant="text"
             className="flex items-center gap-2 rounded-full"
@@ -276,7 +265,7 @@ export function TradeCopierTable({ data, setData }) {
                 ></XMarkIcon>
               </IconButton>
             </div>
-            <div className="gpa flex items-center  justify-around  border-b-2">
+            <div className="gpa flex h-[60%] flex-row items-center  justify-around  border-b-2">
               <p className="font-bold">Copier Mode</p>
               <div className="flex flex-col items-start">
                 <Radio
@@ -305,7 +294,7 @@ export function TradeCopierTable({ data, setData }) {
                 />
               </div>
             </div>
-            <div className="flex items-end justify-end p-3">
+            <div className="flex items-end justify-end p-3 px-2">
               <Button
                 color="blue"
                 size="lg"
@@ -321,5 +310,4 @@ export function TradeCopierTable({ data, setData }) {
     </>
   );
 }
-
 export default TradeCopierTable;

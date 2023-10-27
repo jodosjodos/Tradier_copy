@@ -23,6 +23,7 @@ import { Link } from 'react-router-dom';
 
 export function ManageAccount() {
   const [pageNumber, setPageNumber] = useState(1);
+  const [manageAccountDatas, setAccountDatas] = useState(manageAccountData);
   const accountsPerPage = 5;
   const pagesVisited = (pageNumber - 1) * accountsPerPage;
 
@@ -44,6 +45,12 @@ export function ManageAccount() {
 
     setPageNumber(pageNumber + 1);
   };
+
+  //Deleting
+
+  const handleDeleteAccount = (name) => {
+    setAccountDatas((prev) => prev.filter((account) => account.name !== name));
+  }
 
   const prev = () => {
     if (pageNumber === 1) return;
@@ -134,8 +141,12 @@ export function ManageAccount() {
                 <IconButton color="green" className="h-8 w-8">
                   <ListBulletIcon strokeWidth={2} className="h-4 w-4" />
                 </IconButton>
-                <IconButton color="amber" className="h-8 w-8">
-                  <TrashIcon strokeWidth={2} className="h-4 w-4" />
+                <IconButton color="amber" className="h-8 w-8" >
+                  <TrashIcon 
+                    strokeWidth={2}
+                    className="h-4 w-4"
+                    onClick={() => handleDeleteAccount(manageAccountData)}
+                  />
                 </IconButton>
               </div>
             </td>
