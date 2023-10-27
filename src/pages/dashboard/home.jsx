@@ -10,15 +10,12 @@ import { authorsTableData, projectsTableData } from "@/data";
 import AccountsTable from "@/components/home/AccountsTable";
 import TradesTable from "@/components/home/TradesTable";
 import HistoryTable from "@/components/home/HistoryTable";
-import {
-  Menu,
-  MenuItem,
-  Divider,
-  Fade,
-  Checkbox,
-  FormControlLabel,
-} from "@mui/material";
 import ColumnsSelector from "@/components/ColumnsSelector";
+import {
+  accountsInitialState,
+  tradesInitialState,
+  historyInitialState,
+} from "../../utils/columnTables";
 export function Home() {
   const initialColumnsState = {
     account: true,
@@ -39,12 +36,17 @@ export function Home() {
   const [group, setGroup] = useState("");
   const [account, setAccount] = useState("");
   const [isOpenColumnsMenu, setIsOpenColumnsMenu] = useState(false);
-  const [columns, setColumns] = useState(initialColumnsState);
-  const copierGroup = [
-    "TradersNetworkClub (254738)",
-    "Global Networking Account",
-  ];
-  const accounts = ["Demo Account", "real account"];
+  const [columns, setColumns] = useState(
+    buttonState === "accounts"
+      ? accountsInitialState
+      : buttonState === "trades"
+      ? tradesInitialState
+      : historyInitialState
+  );
+
+  const [copierGroup, setCopierGroup] = useState([]);
+  const [accounts, setAccounts] = useState([]);
+
   const arrayOfColumns = Object.keys(columns).map((key) => ({
     key: key,
     value: columns[key],
@@ -52,17 +54,41 @@ export function Home() {
   const trueValuesCount = arrayOfColumns.filter(
     (item) => item.value === true
   ).length;
+  const handleTradeColumns = () => {
+    setCopierGroup(["TradersNetworkClub (254738)"]);
+    setAccounts(["Demo Account"]);
+  };
+
   useEffect(() => {
     if (arrayOfColumns.length === trueValuesCount) {
       setChecked(true);
     }
-  }, [columns]);
+
+    if (buttonState === "accounts") {
+      setCopierGroup([
+        "TradersNetworkClub (254738)",
+        "Global Networking Account",
+      ]);
+      setAccounts(["Demo Account", "real account"]);
+    } else if (buttonState === "trades") {
+      handleTradeColumns();
+    } else if (buttonState === "history") {
+      setCopierGroup(["TradersNetworkClub (254738)"]);
+      setAccounts(["Demo Account"]);
+    }
+  }, [columns, buttonState]);
   const handleClick = (e) => {
     if (e.target.id === "modalContainer") setIsModalOpen(false);
   };
   const handleViewAll = () => {
     setChecked(true);
-    setColumns(initialColumnsState);
+    setColumns(
+      buttonState === "accounts"
+        ? accountsInitialState
+        : buttonState === "trades"
+        ? tradesInitialState
+        : historyInitialState
+    );
   };
   const handleChange = (event) => {
     setChecked(false);
@@ -73,16 +99,86 @@ export function Home() {
   };
 
   const handleReset = () => {
-    setColumns(initialColumnsState);
+    setChecked(true);
+    setColumns(
+      buttonState === "accounts"
+        ? accountsInitialState
+        : buttonState === "trades"
+        ? tradesInitialState
+        : historyInitialState
+    );
   };
   return (
     <>
       <div className="mt-12 mb-8 flex flex-col gap-12">
         <div className="flex justify-between gap-2">
           <ButtonGroup color="green">
-            <Button onClick={() => setButtonState("accounts")}>Accounts</Button>
-            <Button onClick={() => setButtonState("trades")}>Trades</Button>
-            <Button onClick={() => setButtonState("history")}>History</Button>
+            <Button
+              onClick={() => {
+                setButtonState("accounts");
+                setColumns({
+                  account: true,
+                  mt: true,
+                  balance: true,
+                  equity: true,
+                  equity_percent: true,
+                  open_traders: true,
+                  pending: true,
+                  day: true,
+                  week: true,
+                  month: true,
+                  total: true,
+                });
+              }}
+            >
+              Accounts
+            </Button>
+            <Button
+              onClick={() => {
+                setButtonState("trades");
+                setColumns({
+                  id: true,
+                  ticket: true,
+                  account: true,
+                  opentime: true,
+                  symbol: true,
+                  type: true,
+                  lots: true,
+                  openprice: true,
+                  sl: true,
+                  tp: true,
+                  com: true,
+                  swap: true,
+                  profit: true,
+                });
+              }}
+            >
+              Trades
+            </Button>
+            <Button
+              onClick={() => {
+                setButtonState("history");
+                setColumns({
+                  id: true,
+                  ticket: true,
+                  account: true,
+                  opentime: true,
+                  symbol: true,
+                  type: true,
+                  lots: true,
+                  openprice: true,
+                  sl: true,
+                  tp: true,
+                  closetime: true,
+                  closeprice: true,
+                  com: true,
+                  swap: true,
+                  profit: true,
+                });
+              }}
+            >
+              History
+            </Button>
           </ButtonGroup>
           <div className=" relative flex gap-2">
             <IconButton
@@ -104,11 +200,11 @@ export function Home() {
             {/* drop down menu */}
             {isOpenColumnsMenu && (
               <ColumnsSelector
-                selectedColumns={"Select all columns"}
                 handleChange={handleChange}
                 arrayOfColumns={arrayOfColumns}
                 handleReset={handleReset}
                 checked={checked}
+                setColumns={setColumns}
                 handleViewAll={handleViewAll}
               />
             )}
@@ -130,7 +226,7 @@ export function Home() {
           id="modalContainer"
           className="absolute inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
         >
-          <div className=" h-[40%] w-[30%] rounded-md bg-white p-5">
+          <div className= {` h-[40%] w-[80%] sm:w-[70%] md:w-[50%] lg:w-[30%] rounded-md bg-white p-5`}>
             <div className="flex items-center justify-between">
               <h2 className=" text-xl">Filter view</h2>
               <IconButton
@@ -157,7 +253,7 @@ export function Home() {
                   id="copierGroup"
                 >
                   <option value="">Show All</option>
-                  {copierGroup.map((group, index) => (
+                  {copierGroup?.map((group, index) => (
                     <option key={index} value={group}>
                       {group}
                     </option>
@@ -177,7 +273,7 @@ export function Home() {
                   id="account"
                 >
                   <option value="">Show All</option>
-                  {accounts.map((Account, index) => (
+                  {accounts?.map((Account, index) => (
                     <option key={index} value={Account}>
                       {Account}
                     </option>

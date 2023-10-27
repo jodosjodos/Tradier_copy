@@ -13,6 +13,7 @@ import UserSignalDetails from "@/components/signal/UserSignalDetails";
 import Renew from "@/components/signal/Renew";
 
 import Profile from "../components/accounts/profile"
+import { CopierProfile } from "@/components/copier/CopierProfile";
 
 
 export function Dashboard() {
@@ -48,6 +49,8 @@ export function Dashboard() {
           )}
           <Route path="/signals/:signal" element={<UserSignalDetails/>} />
           <Route path="/accounts/:id/edit/*" element={<Profile/>}/>
+          <Route path="/copier/:id/edit/*" element={<CopierProfile/>}/>
+          <Route path="/trade/:id/edit"/>
           <Route path="/payment" element={<Renew/>}/>
         </Routes>
         <div className="text-blue-gray-600">

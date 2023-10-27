@@ -15,8 +15,9 @@ import {
 } from "@heroicons/react/24/outline";
 import { historyTableData } from "@/data";
 import { useState } from "react";
+import TableHeader from "../TableHeader";
 
-export function HistoryTable({group,account}) {
+export function HistoryTable({ group, account, columns }) {
   const [pageNumber, setPageNumber] = useState(1);
   const historyPerPage = 5;
   const pagesVisited = (pageNumber - 1) * historyPerPage;
@@ -47,6 +48,13 @@ export function HistoryTable({group,account}) {
   };
 
   const displayData = historyTableData
+    .filter((accountData) =>
+      group !== ""
+        ? accountData.account === group
+        : accountData && account !== ""
+        ? accountData.account === account
+        : accountData
+    )
     .slice(pagesVisited, pagesVisited + historyPerPage)
     .map(
       (
@@ -77,81 +85,111 @@ export function HistoryTable({group,account}) {
 
         return (
           <tr key={key}>
-            <td className={className}>
-              <Typography className="text-xs font-normal text-blue-gray-500">
-                {id}
-              </Typography>
-            </td>
-            <td className={className}>
-              <Typography className="text-xs font-semibold text-blue-gray-600">
-                {ticket}
-              </Typography>
-            </td>
-            <td className={className}>
-              <Typography className="text-xs font-normal text-blue-gray-500">
-                {account}
-              </Typography>
-            </td>
-            <td className={className}>
-              <Typography className="text-xs font-normal text-blue-gray-500">
-                {opentime}
-              </Typography>
-            </td>
-            <td className={className}>
-              <Typography className="text-xs font-normal text-blue-gray-500">
-                {symbol}
-              </Typography>
-            </td>
-            <td className={className}>
-              <Typography className="text-xs font-normal text-blue-gray-500">
-                {type}
-              </Typography>
-            </td>
-            <td className={className}>
-              <Typography className="text-xs font-normal text-blue-gray-500">
-                {lots}
-              </Typography>
-            </td>
-            <td className={className}>
-              <Typography className="text-xs font-normal text-blue-gray-500">
-                {openprice}
-              </Typography>
-            </td>
-            <td className={className}>
-              <Typography className="text-xs font-normal text-blue-gray-500">
-                {sl}
-              </Typography>
-            </td>
-            <td className={className}>
-              <Typography className="text-xs font-normal text-blue-gray-500">
-                {tp}
-              </Typography>
-            </td>
-            <td className={className}>
-              <Typography className="text-xs font-normal text-blue-gray-500">
-                {closetime}
-              </Typography>
-            </td>
-            <td className={className}>
-              <Typography className="text-xs font-normal text-blue-gray-500">
-                {closeprice}
-              </Typography>
-            </td>
-            <td className={className}>
-              <Typography className="text-xs font-normal text-blue-gray-500">
-                {com}
-              </Typography>
-            </td>
-            <td className={className}>
-              <Typography className="text-xs font-normal text-blue-gray-500">
-                {swap}
-              </Typography>
-            </td>
-            <td className={className}>
-              <Typography className="text-xs font-normal text-blue-gray-500">
-                {profit}
-              </Typography>
-            </td>
+            {columns.id && (
+              <td className={className}>
+                <Typography className="text-xs font-normal text-blue-gray-500">
+                  {id}
+                </Typography>
+              </td>
+            )}
+            {columns.ticket && (
+              <td className={className}>
+                <Typography className="text-xs font-semibold text-blue-gray-600">
+                  {ticket}
+                </Typography>
+              </td>
+            )}
+            {columns.account && (
+              <td className={className}>
+                <Typography className="text-xs font-normal text-blue-gray-500">
+                  {account}
+                </Typography>
+              </td>
+            )}
+            {columns.opentime && (
+              <td className={className}>
+                <Typography className="text-xs font-normal text-blue-gray-500">
+                  {opentime}
+                </Typography>
+              </td>
+            )}
+            {columns.symbol && (
+              <td className={className}>
+                <Typography className="text-xs font-normal text-blue-gray-500">
+                  {symbol}
+                </Typography>
+              </td>
+            )}
+            {columns.type && (
+              <td className={className}>
+                <Typography className="text-xs font-normal text-blue-gray-500">
+                  {type}
+                </Typography>
+              </td>
+            )}
+            {columns.lots && (
+              <td className={className}>
+                <Typography className="text-xs font-normal text-blue-gray-500">
+                  {lots}
+                </Typography>
+              </td>
+            )}
+            {columns.openprice && (
+              <td className={className}>
+                <Typography className="text-xs font-normal text-blue-gray-500">
+                  {openprice}
+                </Typography>
+              </td>
+            )}
+            {columns.sl && (
+              <td className={className}>
+                <Typography className="text-xs font-normal text-blue-gray-500">
+                  {sl}
+                </Typography>
+              </td>
+            )}
+            {columns.tp && (
+              <td className={className}>
+                <Typography className="text-xs font-normal text-blue-gray-500">
+                  {tp}
+                </Typography>
+              </td>
+            )}
+            {columns.closeprice && (
+              <td className={className}>
+                <Typography className="text-xs font-normal text-blue-gray-500">
+                  {closetime}
+                </Typography>
+              </td>
+            )}
+            {columns.closeprice && (
+              <td className={className}>
+                <Typography className="text-xs font-normal text-blue-gray-500">
+                  {closeprice}
+                </Typography>
+              </td>
+            )}
+            {columns.com && (
+              <td className={className}>
+                <Typography className="text-xs font-normal text-blue-gray-500">
+                  {com}
+                </Typography>
+              </td>
+            )}
+            {columns.swap && (
+              <td className={className}>
+                <Typography className="text-xs font-normal text-blue-gray-500">
+                  {swap}
+                </Typography>
+              </td>
+            )}
+            {columns.profit && (
+              <td className={className}>
+                <Typography className="text-xs font-normal text-blue-gray-500">
+                  {profit}
+                </Typography>
+              </td>
+            )}
             {/* <td className={className}>
               <Typography className="text-xs font-semibold text-blue-gray-600">
                 {job[0]}
@@ -198,36 +236,24 @@ export function HistoryTable({group,account}) {
           <table className="w-full min-w-[640px] table-auto">
             <thead>
               <tr>
-                {[
-                  "ID",
-                  "Ticket",
-                  "Account",
-                  "Open Time",
-                  "Symbol",
-                  "Type",
-                  "Lots",
-                  "Open Price",
-                  "SL",
-                  "TP",
-                  "Close Time",
-                  "Close Price",
-                  "Com",
-                  "Swap",
-                  "Profit",
-                  " ",
-                ].map((el) => (
-                  <th
-                    key={el}
-                    className="border-b border-blue-gray-50 py-3 px-5 text-left"
-                  >
-                    <Typography
-                      variant="small"
-                      className="text-[11px] font-bold uppercase text-blue-gray-400"
-                    >
-                      {el}
-                    </Typography>
-                  </th>
-                ))}
+                <TableHeader value={"ID"} truthy={columns.id} />
+                <TableHeader value={"Ticket"} truthy={columns.ticket} />
+                <TableHeader value={"Open Time"} truthy={columns.opentime} />
+                <TableHeader value={"Symbol"} truthy={columns.symbol} />
+                <TableHeader value={"Type"} truthy={columns.type} />
+                <TableHeader value={"Lots"} truthy={columns.lots} />
+                <TableHeader value={"Open Price"} truthy={columns.openprice} />
+                <TableHeader value={"SL"} truthy={columns.sl} />
+                <TableHeader value={"TP"} truthy={columns.tp} />
+                <TableHeader value={"Close Time"} truthy={columns.closetime} />
+                <TableHeader
+                  value={"Close Price"}
+                  truthy={columns.closeprice}
+                />
+                <TableHeader value={"Com"} truthy={columns.com} />
+                <TableHeader value={"Swap"} truthy={columns.swap} />
+                <TableHeader value={"Profit"} truthy={columns.profit} />
+                <TableHeader value={" "} truthy={true} />
               </tr>
             </thead>
             <tbody>{displayData}</tbody>
@@ -263,6 +289,22 @@ export function HistoryTable({group,account}) {
       </div>
     </div>
   );
+  // "ID",
+  //                 "Ticket",
+  //                 "Account",
+  //                 "Open Time",
+  //                 "Symbol",
+  //                 "Type",
+  //                 "Lots",
+  //                 "Open Price",
+  //                 "SL",
+  //                 "TP",
+  //                 "Close Time",
+  //                 "Close Price",
+  //                 "Com",
+  //                 "Swap",
+  //                 "Profit",
+  //                 " ",
 }
 
 export default HistoryTable;

@@ -2,7 +2,6 @@ import { Button, Checkbox, FormControlLabel, Menu, Fade } from "@mui/material";
 import React, { useState } from "react";
 
 const ColumnsSelector = ({
-  selectedColumns,
   handleChange,
   arrayOfColumns,
   handleReset,
@@ -17,6 +16,11 @@ const ColumnsSelector = ({
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const initialColumnValues = arrayOfColumns.reduce((acc, obj) => {
+    acc[obj.key] = obj.value;
+    return acc;
+  }, {});
+
   const trueValuesCount = arrayOfColumns.filter(item => item.value === true).length;
 
   return (
@@ -50,7 +54,7 @@ const ColumnsSelector = ({
               control={
                 <Checkbox
                   checked={checked}
-                  onChange={handleViewAll}
+                  onChange={()=>handleViewAll(initialColumnValues)}
                   name={"view all"}
                 />
               }

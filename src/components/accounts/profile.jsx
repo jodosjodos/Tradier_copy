@@ -26,8 +26,8 @@ const Profile = () => {
                </p>
             </Link>
         </div>
-        <div>
-            <div className='flex flex-col float-left gap-y-1'>
+        <div className='md:flex justify-between'>
+            <div className='flex flex-col  gap-y-1 md:w-[30%]'>
                 <button 
                     className='px-16 py-2 font-medium text-white bg-blue-500 rounded-md'
                     onClick={() => handleButtonClick('../edit')}
@@ -45,7 +45,7 @@ const Profile = () => {
                     onClick={() => handleButtonClick('symbols')}
                 >Disable Symbols</button>
             </div>
-            <div className='float-right w-[70%] col-md-9 col-sm-12 col-xs-12 shadow'>     
+            <div className=' md:w-[65%] col-md-9 col-sm-12 col-xs-12 shadow'>     
                 <Routes>
                     <Route path="/" element={<AccountProfile />} />
                     <Route path="/equity" element={<EquityProtection />} />
