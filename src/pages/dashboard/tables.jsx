@@ -1,3 +1,6 @@
+import { useState } from "react";
+import AddFollowerModal from "@/components/signalFollowers/addFollowerModal";
+
 import {
   Card,
   CardHeader,
@@ -7,13 +10,39 @@ import {
   Chip,
   Tooltip,
   Progress,
+  IconButton,
 } from "@material-tailwind/react";
-import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
+import {
+  Cog8ToothIcon,
+  TrashIcon,
+} from "@heroicons/react/24/outline";
+import { Link } from 'react-router-dom';
+import { 
+  EllipsisVerticalIcon,
+  PlusSmallIcon
+} from "@heroicons/react/24/outline";
 import { authorsTableData, projectsTableData } from "@/data";
 
 export function Tables() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleModal = () => {
+    setIsModalOpen(true);
+  }
+  console.log(isModalOpen);
   return (
     <div className="mt-12 mb-8 flex flex-col gap-12">
+      <div className="flex justify-between">
+        <div className="flex gap-x-2">
+          <button className="bg-blue-500 text-white font-medium py-2 px-4 rounded-md">Followers</button>
+          <button className=" bg-blue-gray-600 text-white font-medium py-2 px-4 rounded-md">Delete Followers</button>
+        </div>
+        <div>
+          <button className="flex items-center bg-blue-500 text-white font-medium py-2 px-4 rounded-md" onClick={handleModal}>
+            <PlusSmallIcon className="h-4 w-4" />
+            Add Followers
+          </button>
+        </div>
+      </div>
       <Card>
         <CardHeader variant="gradient" color="blue" className="mb-8 p-6">
           <Typography variant="h6" color="white">
@@ -89,13 +118,16 @@ export function Tables() {
                         </Typography>
                       </td>
                       <td className={className}>
-                        <Typography
-                          as="a"
-                          href="#"
-                          className="text-xs font-semibold text-blue-gray-600"
-                        >
-                          Edit
-                        </Typography>
+                        <div className="flex justify-evenly">
+                          <Link to={`../signalFollowers/followersDetails`}>
+                            <IconButton color="blue" className="h-8 w-8">
+                              <Cog8ToothIcon strokeWidth={2} className="h-4 w-4"/>
+                            </IconButton>
+                          </Link>
+                          <IconButton color="red" className="h-8 w-8">
+                            <TrashIcon strokeWidth={2} className="h-4 w-4"/>
+                          </IconButton>
+                        </div>
                       </td>
                     </tr>
                   );
@@ -214,6 +246,13 @@ export function Tables() {
           </table>
         </CardBody>
       </Card>
+      {
+        isModalOpen && (
+          <div>
+            <AddFollowerModal />
+          </div>
+        )
+      }
     </div>
   );
 }
