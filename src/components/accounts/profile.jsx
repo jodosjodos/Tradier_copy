@@ -29,19 +29,19 @@ const Profile = () => {
         <div>
             <div className='flex flex-col float-left gap-y-1'>
                 <button 
-                    className='px-16 py-2 font-medium text-white bg-black rounded-md'
+                    className='px-16 py-2 font-medium text-white bg-blue-500 rounded-md'
                     onClick={() => handleButtonClick('../edit')}
                 >Account profile</button>
                 <button 
-                    className='px-16 py-2 font-medium text-white bg-black rounded-md'
+                    className='px-16 py-2 font-medium text-white bg-blue-500 rounded-md'
                     onClick={() => handleButtonClick('equity')}
                 >Equity Protection</button>
                 <button 
-                    className='px-16 py-2 font-medium text-white bg-black rounded-md'
+                    className='px-16 py-2 font-medium text-white bg-blue-500 rounded-md'
                     onClick={() => handleButtonClick('suffix')}
                 >Forex Suffix</button>
                 <button 
-                    className='px-16 py-2 font-medium text-white bg-black rounded-md'
+                    className='px-16 py-2 font-medium text-white bg-blue-500 rounded-md'
                     onClick={() => handleButtonClick('symbols')}
                 >Disable Symbols</button>
             </div>

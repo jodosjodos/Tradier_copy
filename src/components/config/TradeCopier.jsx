@@ -78,6 +78,16 @@ export function TradeCopierTable() {
       const className = `py-3 px-5 ${
         key === tradeDatas.length - 1 ? "" : "border-b border-blue-gray-50"
       }`;
+  //Modal
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  // Function to close the modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
       return (
         <tr key={key}>
           <td className={className}>
