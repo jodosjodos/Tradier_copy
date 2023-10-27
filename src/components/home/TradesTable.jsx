@@ -15,8 +15,9 @@ import {
 } from "@heroicons/react/24/outline";
 import { tradesTableData } from "@/data";
 import { useState } from "react";
+import TableHeader from "../TableHeader";
 
-export function TradesTable({group,account}) {
+export function TradesTable({group,account,columns}) {
   const [pageNumber, setPageNumber] = useState(1);
   const tradesPerPage = 5;
   const pagesVisited = (pageNumber - 1) * tradesPerPage;
@@ -46,7 +47,7 @@ export function TradesTable({group,account}) {
     setPageNumber(pageNumber - 1);
   };
 
-  const displayData = tradesTableData
+  const displayData = tradesTableData.filter(accountData=>(group !== ""? accountData.account === group : accountData && account !== ""? accountData.account === account:accountData))
     .slice(pagesVisited, pagesVisited + tradesPerPage)
     .map(
       (
@@ -75,71 +76,71 @@ export function TradesTable({group,account}) {
 
         return (
           <tr key={key}>
-            <td className={className}>
+            {columns.id && <td className={className}>
               <Typography className="text-xs font-normal text-blue-gray-500">
                 {id}
               </Typography>
-            </td>
-            <td className={className}>
+            </td>}
+            {columns.ticket && <td className={className}>
               <Typography className="text-xs font-semibold text-blue-gray-600">
                 {ticket}
               </Typography>
-            </td>
-            <td className={className}>
+            </td>}
+            {columns.account && <td className={className}>
               <Typography className="text-xs font-normal text-blue-gray-500">
                 {account}
               </Typography>
-            </td>
-            <td className={className}>
+            </td>}
+            {columns.opentime && <td className={className}>
               <Typography className="text-xs font-normal text-blue-gray-500">
                 {opentime}
               </Typography>
-            </td>
-            <td className={className}>
+            </td>}
+            {columns.symbol && <td className={className}>
               <Typography className="text-xs font-normal text-blue-gray-500">
                 {symbol}
               </Typography>
-            </td>
-            <td className={className}>
+            </td>}
+            {columns.type && <td className={className}>
               <Typography className="text-xs font-normal text-blue-gray-500">
                 {type}
               </Typography>
-            </td>
-            <td className={className}>
+            </td>}
+            {columns.lots && <td className={className}>
               <Typography className="text-xs font-normal text-blue-gray-500">
                 {lots}
               </Typography>
-            </td>
-            <td className={className}>
+            </td>}
+            {columns.openprice && <td className={className}>
               <Typography className="text-xs font-normal text-blue-gray-500">
                 {openprice}
               </Typography>
-            </td>
-            <td className={className}>
+            </td>}
+            {columns.sl && <td className={className}>
               <Typography className="text-xs font-normal text-blue-gray-500">
                 {sl}
               </Typography>
-            </td>
-            <td className={className}>
+            </td>}
+            {columns.tp && <td className={className}>
               <Typography className="text-xs font-normal text-blue-gray-500">
                 {tp}
               </Typography>
-            </td>
-            <td className={className}>
+            </td>}
+            {columns.com && <td className={className}>
               <Typography className="text-xs font-normal text-blue-gray-500">
                 {com}
               </Typography>
-            </td>
-            <td className={className}>
+            </td>}
+            {columns.swap &&  <td className={className}>
               <Typography className="text-xs font-normal text-blue-gray-500">
                 {swap}
               </Typography>
-            </td>
-            <td className={className}>
+            </td>}
+            {columns.profit && <td className={className}>
               <Typography className="text-xs font-normal text-blue-gray-500">
                 {profit}
               </Typography>
-            </td>
+            </td>}
             {/* <td className={className}>
               <Typography className="text-xs font-semibold text-blue-gray-600">
                 {job[0]}
@@ -186,34 +187,20 @@ export function TradesTable({group,account}) {
           <table className="w-full min-w-[640px] table-auto">
             <thead>
               <tr>
-                {[
-                  "ID",
-                  "Ticket",
-                  "Account",
-                  "Open Time",
-                  "Symbol",
-                  "Type",
-                  "Lots",
-                  "Open Price",
-                  "SL",
-                  "TP",
-                  "Com",
-                  "Swap",
-                  "Profit",
-                  " ",
-                ].map((el) => (
-                  <th
-                    key={el}
-                    className="border-b border-blue-gray-50 py-3 px-5 text-left"
-                  >
-                    <Typography
-                      variant="small"
-                      className="text-[11px] font-bold uppercase text-blue-gray-400"
-                    >
-                      {el}
-                    </Typography>
-                  </th>
-                ))}
+                <TableHeader  value={"ID"} truthy={columns.id}/>
+                <TableHeader  value={"Ticket"} truthy={columns.ticket}/>
+                <TableHeader  value={"Account"} truthy={columns.account}/>
+                <TableHeader  value={"Open Time"} truthy={columns.opentime}/>
+                <TableHeader  value={"Symbol"} truthy={columns.symbol}/>
+                <TableHeader  value={"Type"} truthy={columns.type}/>
+                <TableHeader  value={"Lots"} truthy={columns.lots}/>
+                <TableHeader  value={"Open Price"} truthy={columns.openprice}/>
+                <TableHeader  value={"SL"} truthy={columns.sl}/>
+                <TableHeader  value={"TP"} truthy={columns.tp}/>
+                <TableHeader  value={"Com"} truthy={columns.com}/>
+                <TableHeader  value={"Swap"} truthy={columns.swap}/>
+                <TableHeader  value={"Profit"} truthy={columns.profit}/>
+                <TableHeader  value={" "} truthy={true}/>
               </tr>
             </thead>
             <tbody>{displayData}</tbody>
@@ -252,3 +239,18 @@ export function TradesTable({group,account}) {
 }
 
 export default TradesTable;
+
+// "ID",
+// "Ticket",
+// "Account",
+// "Open Time",
+// "Symbol",
+// "Type",
+// "Lots",
+// "Open Price",
+// "SL",
+// "TP",
+// "Com",
+// "Swap",
+// "Profit",
+// " ",

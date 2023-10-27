@@ -213,7 +213,7 @@ export function TradeCopierTable() {
                 ></XMarkIcon>
               </IconButton>
             </div>
-            <div className="gpa flex h-[60%] flex-row items-center  justify-around  border-b-2">
+            <div className="gpa flex items-center  justify-around  border-b-2">
               <p className="font-bold">Copier Mode</p>
               <div className="flex flex-col items-start">
                 <Radio color="green" name="mode" label={"ON"} value="ON" checked={selectedOption === "ON"} onChange={handleChange}/>
@@ -228,7 +228,7 @@ export function TradeCopierTable() {
                 <Radio color="red" name="mode" label="OFF " value={"OFF"} checked={selectedOption === "OFF"} onChange={handleChange} />
               </div>
             </div>
-            <div className="flex items-end justify-end p-3 px-2">
+            <div className="flex items-end justify-end p-3">
               <Button
                 color="blue"
                 size="lg"
